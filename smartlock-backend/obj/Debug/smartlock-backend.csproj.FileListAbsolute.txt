@@ -73,3 +73,6 @@ D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Debug\smartlock-ba
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Debug\smartlock-backend.csproj.CopyComplete
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Debug\smartlock-backend.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Debug\smartlock-backend.pdb
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\System.Web.Cors.dll
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\System.Web.Http.Cors.dll
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\System.Web.Http.Cors.xml

@@ -32,3 +32,6 @@ D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Debug\smartl
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Debug\smartlock-backend.Tests.csproj.CopyComplete
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Debug\smartlock-backend.Tests.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Debug\smartlock-backend.Tests.pdb
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Debug\System.Web.Http.Cors.dll
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Debug\System.Web.Cors.dll
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Debug\System.Web.Http.Cors.xml

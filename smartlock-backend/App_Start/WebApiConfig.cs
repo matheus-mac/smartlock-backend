@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace smartlock_backend
 {
@@ -19,6 +20,8 @@ namespace smartlock_backend
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            var corsAttribute = new EnableCorsAttribute("http://localhost:3000", "*","*");
+            config.EnableCors(corsAttribute);
         }
     }
 }
