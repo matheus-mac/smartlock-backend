@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\Package\PackageTmp" />
+  <setAcl path="D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>

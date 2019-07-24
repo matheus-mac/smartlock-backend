@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="smartlock_localEntities-Web.config Connection String" description="smartlock_localEntities A Cadeia de Conexão usada em web.config pelo aplicativo para acessar o banco de dados." defaultValue="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=LAPTOP-JA56NN4R\SQLEXPRESS;initial catalog=smartlock_local;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\CEFET\\TCC2\\backEnd\\smartlock-backend\\smartlock-backend\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='smartlock_localEntities']/@connectionString" />
+  </parameter>
+  <parameter name="EntitiesProduction-Web.config Connection String" description="EntitiesProduction A Cadeia de Conexão usada em web.config pelo aplicativo para acessar o banco de dados." defaultValue="metadata=res://*/Models.Model2.csdl|res://*/Models.Model2.ssdl|res://*/Models.Model2.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=smartlock-production.database.windows.net;initial catalog=smartlock-production;user id=matheusc11;password=Mac131221;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\CEFET\\TCC2\\backEnd\\smartlock-backend\\smartlock-backend\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EntitiesProduction']/@connectionString" />
+  </parameter>
+  <parameter name="EntitiesProd-Web.config Connection String" description="EntitiesProd A Cadeia de Conexão usada em web.config pelo aplicativo para acessar o banco de dados." defaultValue="metadata=res://*/Models.ModelProd.csdl|res://*/Models.ModelProd.ssdl|res://*/Models.ModelProd.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=smartlock-production.database.windows.net;initial catalog=smartlock-production;user id=matheusc11;password=Mac131221;multipleactiveresultsets=True;application name=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\CEFET\\TCC2\\backEnd\\smartlock-backend\\smartlock-backend\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EntitiesProd']/@connectionString" />
+  </parameter>
+</parameters>

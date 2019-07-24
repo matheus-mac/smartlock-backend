@@ -16,7 +16,8 @@ namespace smartlock_backend.Controllers
 {
     public class UsersResourceController : ApiController
     {
-        private smartlock_localEntities db = new smartlock_localEntities();
+        //private smartlock_localEntities db = new smartlock_localEntities();
+        private EntitiesProd db = new EntitiesProd();
 
         // GET: api/UsersResource
         public IQueryable<Users> GetUsers()

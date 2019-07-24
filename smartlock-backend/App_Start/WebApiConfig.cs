@@ -21,7 +21,9 @@ namespace smartlock_backend
                 defaults: new { id = RouteParameter.Optional }
             );
             var corsAttribute = new EnableCorsAttribute("http://localhost:3000", "*","*");
+            var corsAttributeProduction = new EnableCorsAttribute("https://modest-stallman-a69b78.netlify.com", "*", "*");
             config.EnableCors(corsAttribute);
+            config.EnableCors(corsAttributeProduction);
         }
     }
 }
