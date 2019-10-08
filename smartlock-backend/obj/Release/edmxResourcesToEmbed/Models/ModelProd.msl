@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ModelProdStoreContainer" CdmEntityContainer="EntitiesProd">
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="ModelProd.Users">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
+  <EntityContainerMapping StorageEntityContainer="ModelProdStoreContainer" CdmEntityContainer="ProdEntities">
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="ModelProd.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Senha" ColumnName="Senha" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

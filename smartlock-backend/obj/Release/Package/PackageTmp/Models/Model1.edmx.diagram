@@ -4,8 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0816d38d72b249b98a19dda4918f9a6c" Name="Diagram1">
-        <EntityTypeShape EntityType="smartlock_localModel.Users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="5e68c518d9514217bdf31d9bda27e344" Name="Diagram1">
+        <EntityTypeShape EntityType="FinalModel.Acessos" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalModel.Endereco" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalModel.Fechadura" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalModel.Invasoes" Width="1.5" PointX="10.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalModel.Perfil" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalModel.Usuario" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="FinalModel.FK__Acessos__NumeroS__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalModel.FK__Acessos__Usuario__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalModel.FK__Fechadura__Ender__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalModel.FK__Fechadura__Usuar__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalModel.FK__Invasoes__Numero__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalModel.FK__Usuario__PerfilI__5EBF139D" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

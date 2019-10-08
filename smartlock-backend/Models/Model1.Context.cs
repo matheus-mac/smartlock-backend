@@ -13,10 +13,10 @@ namespace smartlock_backend.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class smartlock_localEntities : DbContext
+    public partial class EntitiesProduction : DbContext
     {
-        public smartlock_localEntities()
-            : base("name=smartlock_localEntities")
+        public EntitiesProduction()
+            : base("name=EntitiesProduction")
         {
         }
     
@@ -25,6 +25,11 @@ namespace smartlock_backend.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Acessos> Acessos { get; set; }
+        public virtual DbSet<Endereco> Endereco { get; set; }
+        public virtual DbSet<Fechadura> Fechadura { get; set; }
+        public virtual DbSet<Invasoes> Invasoes { get; set; }
+        public virtual DbSet<Perfil> Perfil { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="ModelProd.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="ModelProd.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <!--Errors Found During Generation:
-warning 6002: The table/view 'smartlock-production.dbo.Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="Users">
+warning 6002: The table/view 'smartlock-production.dbo.Usuarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Usuarios">
     <Key>
-      <PropertyRef Name="id" />
-      <PropertyRef Name="username" />
-      <PropertyRef Name="password" />
+      <PropertyRef Name="Nome" />
+      <PropertyRef Name="Senha" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Senha" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityContainer Name="ModelProdStoreContainer">
-    <EntitySet Name="Users" EntityType="Self.Users" store:Type="Tables" store:Schema="dbo">
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
-    [Users].[id] AS [id], 
-    [Users].[username] AS [username], 
-    [Users].[password] AS [password]
-    FROM [dbo].[Users] AS [Users]</DefiningQuery>
+    [Usuarios].[Nome] AS [Nome], 
+    [Usuarios].[Senha] AS [Senha], 
+    [Usuarios].[Id] AS [Id]
+    FROM [dbo].[Usuarios] AS [Usuarios]</DefiningQuery>
     </EntitySet>
   </EntityContainer>
 </Schema>

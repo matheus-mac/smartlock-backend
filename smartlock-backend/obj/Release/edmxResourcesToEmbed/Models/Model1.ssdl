@@ -1,14 +1,200 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="smartlock_localModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Users">
+<Schema Namespace="FinalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Acessos">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="AcessosId" />
     </Key>
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="username" Type="varchar" MaxLength="50" />
-    <Property Name="password" Type="varchar" MaxLength="50" />
+    <Property Name="DataHora" Type="varchar" MaxLength="10" />
+    <Property Name="AcessosId" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NumeroSerial" Type="int" />
+    <Property Name="UsuarioId" Type="int" />
   </EntityType>
-  <EntityContainer Name="smartlock_localModelStoreContainer">
-    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+  <EntityType Name="Endereco">
+    <Key>
+      <PropertyRef Name="EnderecoId" />
+    </Key>
+    <Property Name="UF" Type="varchar" MaxLength="2" />
+    <Property Name="Numero" Type="int" />
+    <Property Name="Cidade" Type="varchar" MaxLength="100" />
+    <Property Name="Rua" Type="varchar" MaxLength="100" />
+    <Property Name="CEP" Type="varchar" MaxLength="8" />
+    <Property Name="Bairro" Type="varchar" MaxLength="100" />
+    <Property Name="EnderecoId" Type="int" Nullable="false" />
+    <Property Name="Complemento" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Fechadura">
+    <Key>
+      <PropertyRef Name="NumeroSerial" />
+    </Key>
+    <Property Name="EnderecoMAC" Type="varchar" MaxLength="30" />
+    <Property Name="Versao" Type="int" />
+    <Property Name="DataDeAtivacao" Type="datetime" />
+    <Property Name="NumeroSerial" Type="int" Nullable="false" />
+    <Property Name="IdentificadorFechadura" Type="varchar" MaxLength="100" />
+    <Property Name="UsuarioId" Type="int" />
+    <Property Name="EnderecoId" Type="int" />
+  </EntityType>
+  <EntityType Name="Invasoes">
+    <Key>
+      <PropertyRef Name="InvasoesId" />
+    </Key>
+    <Property Name="InvasoesId" Type="int" Nullable="false" />
+    <Property Name="VideoLink" Type="varchar" MaxLength="100" />
+    <Property Name="DataHora" Type="datetime" />
+    <Property Name="NumeroSerial" Type="int" />
+  </EntityType>
+  <EntityType Name="Perfil">
+    <Key>
+      <PropertyRef Name="PerfilId" />
+    </Key>
+    <Property Name="Descricao" Type="varchar" MaxLength="100" />
+    <Property Name="PerfilId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'smartlock-production.dbo.PessoaFisica' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PessoaFisica">
+          <Property Name="CPF" Type="varchar" MaxLength="11" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'smartlock-production.dbo.PessoaJuridica' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PessoaJuridica">
+          <Property Name="CNPJ" Type="varchar" MaxLength="14" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'smartlock-production.dbo.Residencia' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Residencia">
+          <Property Name="EnderecoId" Type="int" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="RFIDCard" Type="varchar" MaxLength="10" />
+    <Property Name="Nome" Type="varchar" MaxLength="100" />
+    <Property Name="Senha" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="Telefone" Type="varchar" MaxLength="30" />
+    <Property Name="Foto" Type="varchar" MaxLength="100" />
+    <Property Name="PerfilId" Type="int" />
+  </EntityType>
+  <Association Name="FK__Acessos__NumeroS__59FA5E80">
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="0..1" />
+    <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fechadura">
+        <PropertyRef Name="NumeroSerial" />
+      </Principal>
+      <Dependent Role="Acessos">
+        <PropertyRef Name="NumeroSerial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Acessos__Usuario__5AEE82B9">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Acessos">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Fechadura__Ender__5441852A">
+    <End Role="Endereco" Type="Self.Endereco" Multiplicity="0..1" />
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Endereco">
+        <PropertyRef Name="EnderecoId" />
+      </Principal>
+      <Dependent Role="Fechadura">
+        <PropertyRef Name="EnderecoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Fechadura__Usuar__534D60F1">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Fechadura">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invasoes__Numero__571DF1D5">
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="0..1" />
+    <End Role="Invasoes" Type="Self.Invasoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fechadura">
+        <PropertyRef Name="NumeroSerial" />
+      </Principal>
+      <Dependent Role="Invasoes">
+        <PropertyRef Name="NumeroSerial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.PessoaFisica' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__PessoaFis__Usuar__5070F446" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.PessoaJuridica' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__PessoaJur__Usuar__4E88ABD4" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.Residencia' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__Residenci__Ender__5CD6CB2B" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.Residencia' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__Residenci__Usuar__5DCAEF64" />-->
+  <Association Name="FK__Usuario__PerfilI__5EBF139D">
+    <End Role="Perfil" Type="Self.Perfil" Multiplicity="0..1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perfil">
+        <PropertyRef Name="PerfilId" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="PerfilId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FinalModelStoreContainer">
+    <EntitySet Name="Acessos" EntityType="Self.Acessos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Endereco" EntityType="Self.Endereco" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Fechadura" EntityType="Self.Fechadura" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invasoes" EntityType="Self.Invasoes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Acessos__NumeroS__59FA5E80" Association="Self.FK__Acessos__NumeroS__59FA5E80">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Acessos" EntitySet="Acessos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Acessos__Usuario__5AEE82B9" Association="Self.FK__Acessos__Usuario__5AEE82B9">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Acessos" EntitySet="Acessos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Fechadura__Ender__5441852A" Association="Self.FK__Fechadura__Ender__5441852A">
+      <End Role="Endereco" EntitySet="Endereco" />
+      <End Role="Fechadura" EntitySet="Fechadura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Fechadura__Usuar__534D60F1" Association="Self.FK__Fechadura__Usuar__534D60F1">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Fechadura" EntitySet="Fechadura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invasoes__Numero__571DF1D5" Association="Self.FK__Invasoes__Numero__571DF1D5">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Invasoes" EntitySet="Invasoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__PerfilI__5EBF139D" Association="Self.FK__Usuario__PerfilI__5EBF139D">
+      <End Role="Perfil" EntitySet="Perfil" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

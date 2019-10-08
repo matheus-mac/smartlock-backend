@@ -4,46 +4,460 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="smartlock_localModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Users">
+      <Schema Namespace="FinalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acessos">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="AcessosId" />
           </Key>
-          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="50" />
-          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="DataHora" Type="varchar" MaxLength="10" />
+          <Property Name="AcessosId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumeroSerial" Type="int" />
+          <Property Name="UsuarioId" Type="int" />
         </EntityType>
-        <EntityContainer Name="smartlock_localModelStoreContainer">
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+        <EntityType Name="Endereco">
+          <Key>
+            <PropertyRef Name="EnderecoId" />
+          </Key>
+          <Property Name="UF" Type="varchar" MaxLength="2" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="Cidade" Type="varchar" MaxLength="100" />
+          <Property Name="Rua" Type="varchar" MaxLength="100" />
+          <Property Name="CEP" Type="varchar" MaxLength="8" />
+          <Property Name="Bairro" Type="varchar" MaxLength="100" />
+          <Property Name="EnderecoId" Type="int" Nullable="false" />
+          <Property Name="Complemento" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Fechadura">
+          <Key>
+            <PropertyRef Name="NumeroSerial" />
+          </Key>
+          <Property Name="EnderecoMAC" Type="varchar" MaxLength="30" />
+          <Property Name="Versao" Type="int" />
+          <Property Name="DataDeAtivacao" Type="datetime" />
+          <Property Name="NumeroSerial" Type="int" Nullable="false" />
+          <Property Name="IdentificadorFechadura" Type="varchar" MaxLength="100" />
+          <Property Name="UsuarioId" Type="int" />
+          <Property Name="EnderecoId" Type="int" />
+        </EntityType>
+        <EntityType Name="Invasoes">
+          <Key>
+            <PropertyRef Name="InvasoesId" />
+          </Key>
+          <Property Name="InvasoesId" Type="int" Nullable="false" />
+          <Property Name="VideoLink" Type="varchar" MaxLength="100" />
+          <Property Name="DataHora" Type="datetime" />
+          <Property Name="NumeroSerial" Type="int" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="PerfilId" />
+          </Key>
+          <Property Name="Descricao" Type="varchar" MaxLength="100" />
+          <Property Name="PerfilId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'smartlock-production.dbo.PessoaFisica' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PessoaFisica">
+          <Property Name="CPF" Type="varchar" MaxLength="11" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'smartlock-production.dbo.PessoaJuridica' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PessoaJuridica">
+          <Property Name="CNPJ" Type="varchar" MaxLength="14" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'smartlock-production.dbo.Residencia' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Residencia">
+          <Property Name="EnderecoId" Type="int" />
+          <Property Name="UsuarioId" Type="int" />
+        </EntityType>-->
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="RFIDCard" Type="varchar" MaxLength="10" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" />
+          <Property Name="Senha" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Telefone" Type="varchar" MaxLength="30" />
+          <Property Name="Foto" Type="varchar" MaxLength="100" />
+          <Property Name="PerfilId" Type="int" />
+        </EntityType>
+        <Association Name="FK__Acessos__NumeroS__59FA5E80">
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="0..1" />
+          <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fechadura">
+              <PropertyRef Name="NumeroSerial" />
+            </Principal>
+            <Dependent Role="Acessos">
+              <PropertyRef Name="NumeroSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Acessos__Usuario__5AEE82B9">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Acessos">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fechadura__Ender__5441852A">
+          <End Role="Endereco" Type="Self.Endereco" Multiplicity="0..1" />
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Endereco">
+              <PropertyRef Name="EnderecoId" />
+            </Principal>
+            <Dependent Role="Fechadura">
+              <PropertyRef Name="EnderecoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fechadura__Usuar__534D60F1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Fechadura">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invasoes__Numero__571DF1D5">
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="0..1" />
+          <End Role="Invasoes" Type="Self.Invasoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fechadura">
+              <PropertyRef Name="NumeroSerial" />
+            </Principal>
+            <Dependent Role="Invasoes">
+              <PropertyRef Name="NumeroSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.PessoaFisica' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__PessoaFis__Usuar__5070F446" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.PessoaJuridica' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__PessoaJur__Usuar__4E88ABD4" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.Residencia' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__Residenci__Ender__5CD6CB2B" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'smartlock-production.dbo.Residencia' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__Residenci__Usuar__5DCAEF64" />-->
+        <Association Name="FK__Usuario__PerfilI__5EBF139D">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="PerfilId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="PerfilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FinalModelStoreContainer">
+          <EntitySet Name="Acessos" EntityType="Self.Acessos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Endereco" EntityType="Self.Endereco" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fechadura" EntityType="Self.Fechadura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invasoes" EntityType="Self.Invasoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Acessos__NumeroS__59FA5E80" Association="Self.FK__Acessos__NumeroS__59FA5E80">
+            <End Role="Fechadura" EntitySet="Fechadura" />
+            <End Role="Acessos" EntitySet="Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Acessos__Usuario__5AEE82B9" Association="Self.FK__Acessos__Usuario__5AEE82B9">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Acessos" EntitySet="Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fechadura__Ender__5441852A" Association="Self.FK__Fechadura__Ender__5441852A">
+            <End Role="Endereco" EntitySet="Endereco" />
+            <End Role="Fechadura" EntitySet="Fechadura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fechadura__Usuar__534D60F1" Association="Self.FK__Fechadura__Usuar__534D60F1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Fechadura" EntitySet="Fechadura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invasoes__Numero__571DF1D5" Association="Self.FK__Invasoes__Numero__571DF1D5">
+            <End Role="Fechadura" EntitySet="Fechadura" />
+            <End Role="Invasoes" EntitySet="Invasoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__PerfilI__5EBF139D" Association="Self.FK__Usuario__PerfilI__5EBF139D">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="smartlock_localModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Users">
+      <Schema Namespace="FinalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Acessos">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="AcessosId" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DataHora" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AcessosId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroSerial" Type="Int32" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <NavigationProperty Name="Fechadura" Relationship="Self.FK__Acessos__NumeroS__59FA5E80" FromRole="Acessos" ToRole="Fechadura" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Acessos__Usuario__5AEE82B9" FromRole="Acessos" ToRole="Usuario" />
         </EntityType>
-        <EntityContainer Name="smartlock_localEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="Self.Users" />
+        <EntityType Name="Endereco">
+          <Key>
+            <PropertyRef Name="EnderecoId" />
+          </Key>
+          <Property Name="UF" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="Cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Rua" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CEP" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Bairro" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EnderecoId" Type="Int32" Nullable="false" />
+          <Property Name="Complemento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Fechadura" Relationship="Self.FK__Fechadura__Ender__5441852A" FromRole="Endereco" ToRole="Fechadura" />
+        </EntityType>
+        <EntityType Name="Fechadura">
+          <Key>
+            <PropertyRef Name="NumeroSerial" />
+          </Key>
+          <Property Name="EnderecoMAC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Versao" Type="Int32" />
+          <Property Name="DataDeAtivacao" Type="DateTime" Precision="3" />
+          <Property Name="NumeroSerial" Type="Int32" Nullable="false" />
+          <Property Name="IdentificadorFechadura" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <Property Name="EnderecoId" Type="Int32" />
+          <NavigationProperty Name="Acessos" Relationship="Self.FK__Acessos__NumeroS__59FA5E80" FromRole="Fechadura" ToRole="Acessos" />
+          <NavigationProperty Name="Endereco" Relationship="Self.FK__Fechadura__Ender__5441852A" FromRole="Fechadura" ToRole="Endereco" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Fechadura__Usuar__534D60F1" FromRole="Fechadura" ToRole="Usuario" />
+          <NavigationProperty Name="Invasoes" Relationship="Self.FK__Invasoes__Numero__571DF1D5" FromRole="Fechadura" ToRole="Invasoes" />
+        </EntityType>
+        <EntityType Name="Invasoes">
+          <Key>
+            <PropertyRef Name="InvasoesId" />
+          </Key>
+          <Property Name="InvasoesId" Type="Int32" Nullable="false" />
+          <Property Name="VideoLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DataHora" Type="DateTime" Precision="3" />
+          <Property Name="NumeroSerial" Type="Int32" />
+          <NavigationProperty Name="Fechadura" Relationship="Self.FK__Invasoes__Numero__571DF1D5" FromRole="Invasoes" ToRole="Fechadura" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="PerfilId" />
+          </Key>
+          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PerfilId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__PerfilI__5EBF139D" FromRole="Perfil" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="RFIDCard" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Senha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Telefone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Foto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PerfilId" Type="Int32" />
+          <NavigationProperty Name="Acessos" Relationship="Self.FK__Acessos__Usuario__5AEE82B9" FromRole="Usuario" ToRole="Acessos" />
+          <NavigationProperty Name="Fechadura" Relationship="Self.FK__Fechadura__Usuar__534D60F1" FromRole="Usuario" ToRole="Fechadura" />
+          <NavigationProperty Name="Perfil" Relationship="Self.FK__Usuario__PerfilI__5EBF139D" FromRole="Usuario" ToRole="Perfil" />
+        </EntityType>
+        <Association Name="FK__Acessos__NumeroS__59FA5E80">
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="0..1" />
+          <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fechadura">
+              <PropertyRef Name="NumeroSerial" />
+            </Principal>
+            <Dependent Role="Acessos">
+              <PropertyRef Name="NumeroSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Acessos__Usuario__5AEE82B9">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Acessos">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fechadura__Ender__5441852A">
+          <End Role="Endereco" Type="Self.Endereco" Multiplicity="0..1" />
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Endereco">
+              <PropertyRef Name="EnderecoId" />
+            </Principal>
+            <Dependent Role="Fechadura">
+              <PropertyRef Name="EnderecoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fechadura__Usuar__534D60F1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Fechadura">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invasoes__Numero__571DF1D5">
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="0..1" />
+          <End Role="Invasoes" Type="Self.Invasoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fechadura">
+              <PropertyRef Name="NumeroSerial" />
+            </Principal>
+            <Dependent Role="Invasoes">
+              <PropertyRef Name="NumeroSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__PerfilI__5EBF139D">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="PerfilId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="PerfilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EntitiesProduction" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Acessos" EntityType="Self.Acessos" />
+          <EntitySet Name="Endereco" EntityType="Self.Endereco" />
+          <EntitySet Name="Fechadura" EntityType="Self.Fechadura" />
+          <EntitySet Name="Invasoes" EntityType="Self.Invasoes" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Acessos__NumeroS__59FA5E80" Association="Self.FK__Acessos__NumeroS__59FA5E80">
+            <End Role="Fechadura" EntitySet="Fechadura" />
+            <End Role="Acessos" EntitySet="Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Acessos__Usuario__5AEE82B9" Association="Self.FK__Acessos__Usuario__5AEE82B9">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Acessos" EntitySet="Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fechadura__Ender__5441852A" Association="Self.FK__Fechadura__Ender__5441852A">
+            <End Role="Endereco" EntitySet="Endereco" />
+            <End Role="Fechadura" EntitySet="Fechadura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fechadura__Usuar__534D60F1" Association="Self.FK__Fechadura__Usuar__534D60F1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Fechadura" EntitySet="Fechadura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invasoes__Numero__571DF1D5" Association="Self.FK__Invasoes__Numero__571DF1D5">
+            <End Role="Fechadura" EntitySet="Fechadura" />
+            <End Role="Invasoes" EntitySet="Invasoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__PerfilI__5EBF139D" Association="Self.FK__Usuario__PerfilI__5EBF139D">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="smartlock_localModelStoreContainer" CdmEntityContainer="smartlock_localEntities">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="smartlock_localModel.Users">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="password" ColumnName="password" />
+        <EntityContainerMapping StorageEntityContainer="FinalModelStoreContainer" CdmEntityContainer="EntitiesProduction">
+          <EntitySetMapping Name="Acessos">
+            <EntityTypeMapping TypeName="FinalModel.Acessos">
+              <MappingFragment StoreEntitySet="Acessos">
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="AcessosId" ColumnName="AcessosId" />
+                <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Endereco">
+            <EntityTypeMapping TypeName="FinalModel.Endereco">
+              <MappingFragment StoreEntitySet="Endereco">
+                <ScalarProperty Name="UF" ColumnName="UF" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+                <ScalarProperty Name="Rua" ColumnName="Rua" />
+                <ScalarProperty Name="CEP" ColumnName="CEP" />
+                <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+                <ScalarProperty Name="EnderecoId" ColumnName="EnderecoId" />
+                <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fechadura">
+            <EntityTypeMapping TypeName="FinalModel.Fechadura">
+              <MappingFragment StoreEntitySet="Fechadura">
+                <ScalarProperty Name="EnderecoMAC" ColumnName="EnderecoMAC" />
+                <ScalarProperty Name="Versao" ColumnName="Versao" />
+                <ScalarProperty Name="DataDeAtivacao" ColumnName="DataDeAtivacao" />
+                <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
+                <ScalarProperty Name="IdentificadorFechadura" ColumnName="IdentificadorFechadura" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="EnderecoId" ColumnName="EnderecoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invasoes">
+            <EntityTypeMapping TypeName="FinalModel.Invasoes">
+              <MappingFragment StoreEntitySet="Invasoes">
+                <ScalarProperty Name="InvasoesId" ColumnName="InvasoesId" />
+                <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+                <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfil">
+            <EntityTypeMapping TypeName="FinalModel.Perfil">
+              <MappingFragment StoreEntitySet="Perfil">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="PerfilId" ColumnName="PerfilId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="FinalModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="RFIDCard" ColumnName="RFIDCard" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="PerfilId" ColumnName="PerfilId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

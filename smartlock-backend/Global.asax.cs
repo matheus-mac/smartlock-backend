@@ -12,7 +12,6 @@ namespace smartlock_backend
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-           
-        }
+        }   
     }
 }
