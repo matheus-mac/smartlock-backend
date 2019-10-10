@@ -15,7 +15,7 @@ namespace smartlock_backend.Controllers
 {
     public class InvasoesController : ApiController
     {
-        private EntitiesProduction db = new EntitiesProduction();
+        private CaraCrachaModelo db = new CaraCrachaModelo();
 
         // GET: api/Invasoes
         public IQueryable<Invasoes> GetInvasoes()
@@ -81,22 +81,7 @@ namespace smartlock_backend.Controllers
             }
 
             db.Invasoes.Add(invasoes);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (InvasoesExists(invasoes.InvasoesId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = invasoes.InvasoesId }, invasoes);
         }

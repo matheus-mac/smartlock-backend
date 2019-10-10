@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmartlockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Acessos">
+    <Key>
+      <PropertyRef Name="AcessosId" />
+    </Key>
+    <Property Name="DataHora" Type="varchar" MaxLength="10" />
+    <Property Name="AcessosId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NumeroSerial" Type="int" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Endereco">
+    <Key>
+      <PropertyRef Name="EnderecoId" />
+    </Key>
+    <Property Name="UF" Type="varchar" MaxLength="2" />
+    <Property Name="Numero" Type="int" />
+    <Property Name="Cidade" Type="varchar" MaxLength="100" />
+    <Property Name="Rua" Type="varchar" MaxLength="100" />
+    <Property Name="CEP" Type="varchar" MaxLength="8" />
+    <Property Name="Bairro" Type="varchar" MaxLength="100" />
+    <Property Name="EnderecoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Complemento" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Fechadura">
+    <Key>
+      <PropertyRef Name="NumeroSerial" />
+    </Key>
+    <Property Name="EnderecoMAC" Type="varchar" MaxLength="30" />
+    <Property Name="Versao" Type="int" />
+    <Property Name="NumeroSerial" Type="int" Nullable="false" />
+    <Property Name="IdentificadorFechadura" Type="varchar" MaxLength="100" />
+    <Property Name="DataDeAtivacao" Type="datetime" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="EnderecoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invasoes">
+    <Key>
+      <PropertyRef Name="InvasoesId" />
+    </Key>
+    <Property Name="InvasoesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VideoLink" Type="varchar" MaxLength="100" />
+    <Property Name="DataHora" Type="datetime" />
+    <Property Name="NumeroSerial" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Perfil">
+    <Key>
+      <PropertyRef Name="PerfilId" />
+    </Key>
+    <Property Name="PerfilId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descricao" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'smartlock-production.dbo.PessoaFisica' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PessoaFisica">
+    <Key>
+      <PropertyRef Name="CPF" />
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="CPF" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'smartlock-production.dbo.PessoaJuridica' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PessoaJuridica">
+    <Key>
+      <PropertyRef Name="CNPJ" />
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="CNPJ" Type="varchar" MaxLength="14" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'smartlock-production.dbo.Residencia' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Residencia">
+    <Key>
+      <PropertyRef Name="EnderecoId" />
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="EnderecoId" Type="int" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="RFIDCard" Type="varchar" MaxLength="30" />
+    <Property Name="Nome" Type="varchar" MaxLength="100" />
+    <Property Name="Senha" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Telefone" Type="varchar" MaxLength="30" />
+    <Property Name="Foto" Type="varchar" MaxLength="100" />
+    <Property Name="PerfilId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Acessos__NumeroS__09A971A2">
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
+    <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fechadura">
+        <PropertyRef Name="NumeroSerial" />
+      </Principal>
+      <Dependent Role="Acessos">
+        <PropertyRef Name="NumeroSerial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Acessos__Usuario__0A9D95DB">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Acessos">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Fechadura__Ender__02084FDA">
+    <End Role="Endereco" Type="Self.Endereco" Multiplicity="1" />
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Endereco">
+        <PropertyRef Name="EnderecoId" />
+      </Principal>
+      <Dependent Role="Fechadura">
+        <PropertyRef Name="EnderecoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Fechadura__Usuar__01142BA1">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Fechadura">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invasoes__Numero__04E4BC85">
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
+    <End Role="Invasoes" Type="Self.Invasoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fechadura">
+        <PropertyRef Name="NumeroSerial" />
+      </Principal>
+      <Dependent Role="Invasoes">
+        <PropertyRef Name="NumeroSerial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PessoaFis__Usuar__7E37BEF6">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="PessoaFisica" Type="Self.PessoaFisica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="PessoaFisica">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PessoaJur__Usuar__7C4F7684">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="PessoaJuridica" Type="Self.PessoaJuridica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="PessoaJuridica">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Residenci__Ender__0C85DE4D">
+    <End Role="Endereco" Type="Self.Endereco" Multiplicity="1" />
+    <End Role="Residencia" Type="Self.Residencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Endereco">
+        <PropertyRef Name="EnderecoId" />
+      </Principal>
+      <Dependent Role="Residencia">
+        <PropertyRef Name="EnderecoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Residenci__Usuar__0D7A0286">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Residencia" Type="Self.Residencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Residencia">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario__PerfilI__0E6E26BF">
+    <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perfil">
+        <PropertyRef Name="PerfilId" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="PerfilId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmartlockModelStoreContainer">
+    <EntitySet Name="Acessos" EntityType="Self.Acessos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Endereco" EntityType="Self.Endereco" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Fechadura" EntityType="Self.Fechadura" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invasoes" EntityType="Self.Invasoes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PessoaFisica" EntityType="Self.PessoaFisica" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PessoaFisica].[CPF] AS [CPF], 
+    [PessoaFisica].[UsuarioId] AS [UsuarioId]
+    FROM [dbo].[PessoaFisica] AS [PessoaFisica]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PessoaJuridica" EntityType="Self.PessoaJuridica" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PessoaJuridica].[CNPJ] AS [CNPJ], 
+    [PessoaJuridica].[UsuarioId] AS [UsuarioId]
+    FROM [dbo].[PessoaJuridica] AS [PessoaJuridica]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Residencia" EntityType="Self.Residencia" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Residencia].[EnderecoId] AS [EnderecoId], 
+    [Residencia].[UsuarioId] AS [UsuarioId]
+    FROM [dbo].[Residencia] AS [Residencia]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Acessos__NumeroS__09A971A2" Association="Self.FK__Acessos__NumeroS__09A971A2">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Acessos" EntitySet="Acessos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Acessos__Usuario__0A9D95DB" Association="Self.FK__Acessos__Usuario__0A9D95DB">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Acessos" EntitySet="Acessos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Fechadura__Ender__02084FDA" Association="Self.FK__Fechadura__Ender__02084FDA">
+      <End Role="Endereco" EntitySet="Endereco" />
+      <End Role="Fechadura" EntitySet="Fechadura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Fechadura__Usuar__01142BA1" Association="Self.FK__Fechadura__Usuar__01142BA1">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Fechadura" EntitySet="Fechadura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invasoes__Numero__04E4BC85" Association="Self.FK__Invasoes__Numero__04E4BC85">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Invasoes" EntitySet="Invasoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PessoaFis__Usuar__7E37BEF6" Association="Self.FK__PessoaFis__Usuar__7E37BEF6">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="PessoaFisica" EntitySet="PessoaFisica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PessoaJur__Usuar__7C4F7684" Association="Self.FK__PessoaJur__Usuar__7C4F7684">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="PessoaJuridica" EntitySet="PessoaJuridica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Residenci__Ender__0C85DE4D" Association="Self.FK__Residenci__Ender__0C85DE4D">
+      <End Role="Endereco" EntitySet="Endereco" />
+      <End Role="Residencia" EntitySet="Residencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Residenci__Usuar__0D7A0286" Association="Self.FK__Residenci__Usuar__0D7A0286">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Residencia" EntitySet="Residencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__PerfilI__0E6E26BF" Association="Self.FK__Usuario__PerfilI__0E6E26BF">
+      <End Role="Perfil" EntitySet="Perfil" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

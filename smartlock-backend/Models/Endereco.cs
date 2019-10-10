@@ -31,5 +31,6 @@ namespace smartlock_backend.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fechadura> Fechadura { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

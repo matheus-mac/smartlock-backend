@@ -20,6 +20,10 @@ namespace smartlock_backend
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+            //    = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             //var corsAttribute = new EnableCorsAttribute("http://localhost:3000", "*","*");
             var corsAttributeProduction = new EnableCorsAttribute("https://modest-stallman-a69b78.netlify.com", "*", "*");
             //config.EnableCors(corsAttribute);

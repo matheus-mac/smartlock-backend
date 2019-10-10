@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="EntitiesProductionAWS">
+    <EntitySetMapping Name="Acessos">
+      <EntityTypeMapping TypeName="Model.Acessos">
+        <MappingFragment StoreEntitySet="Acessos">
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="AcessosId" ColumnName="AcessosId" />
+          <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Endereco">
+      <EntityTypeMapping TypeName="Model.Endereco">
+        <MappingFragment StoreEntitySet="Endereco">
+          <ScalarProperty Name="UF" ColumnName="UF" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+          <ScalarProperty Name="Rua" ColumnName="Rua" />
+          <ScalarProperty Name="CEP" ColumnName="CEP" />
+          <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+          <ScalarProperty Name="EnderecoId" ColumnName="EnderecoId" />
+          <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fechadura">
+      <EntityTypeMapping TypeName="Model.Fechadura">
+        <MappingFragment StoreEntitySet="Fechadura">
+          <ScalarProperty Name="EnderecoMAC" ColumnName="EnderecoMAC" />
+          <ScalarProperty Name="Versao" ColumnName="Versao" />
+          <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
+          <ScalarProperty Name="IdentificadorFechadura" ColumnName="IdentificadorFechadura" />
+          <ScalarProperty Name="DataDeAtivacao" ColumnName="DataDeAtivacao" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="EnderecoId" ColumnName="EnderecoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invasoes">
+      <EntityTypeMapping TypeName="Model.Invasoes">
+        <MappingFragment StoreEntitySet="Invasoes">
+          <ScalarProperty Name="InvasoesId" ColumnName="InvasoesId" />
+          <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
+          <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+          <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Perfil">
+      <EntityTypeMapping TypeName="Model.Perfil">
+        <MappingFragment StoreEntitySet="Perfil">
+          <ScalarProperty Name="PerfilId" ColumnName="PerfilId" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="Model.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="RFIDCard" ColumnName="RFIDCard" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Senha" ColumnName="Senha" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+          <ScalarProperty Name="Foto" ColumnName="Foto" />
+          <ScalarProperty Name="PerfilId" ColumnName="PerfilId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

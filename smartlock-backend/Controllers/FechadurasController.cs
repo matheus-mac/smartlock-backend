@@ -15,7 +15,7 @@ namespace smartlock_backend.Controllers
 {
     public class FechadurasController : ApiController
     {
-        private EntitiesProduction db = new EntitiesProduction();
+        private CaraCrachaModelo db = new CaraCrachaModelo();
 
         // GET: api/Fechaduras
         public IQueryable<Fechadura> GetFechadura()

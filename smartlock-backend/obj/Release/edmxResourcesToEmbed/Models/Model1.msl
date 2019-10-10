@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="FinalModelStoreContainer" CdmEntityContainer="EntitiesProduction">
+  <EntityContainerMapping StorageEntityContainer="CaraCrachaStoreContainer" CdmEntityContainer="CaraCrachaModelo">
     <EntitySetMapping Name="Acessos">
-      <EntityTypeMapping TypeName="FinalModel.Acessos">
+      <EntityTypeMapping TypeName="CaraCracha.Acessos">
         <MappingFragment StoreEntitySet="Acessos">
           <ScalarProperty Name="DataHora" ColumnName="DataHora" />
           <ScalarProperty Name="AcessosId" ColumnName="AcessosId" />
@@ -12,7 +12,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Endereco">
-      <EntityTypeMapping TypeName="FinalModel.Endereco">
+      <EntityTypeMapping TypeName="CaraCracha.Endereco">
         <MappingFragment StoreEntitySet="Endereco">
           <ScalarProperty Name="UF" ColumnName="UF" />
           <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -26,20 +26,20 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Fechadura">
-      <EntityTypeMapping TypeName="FinalModel.Fechadura">
+      <EntityTypeMapping TypeName="CaraCracha.Fechadura">
         <MappingFragment StoreEntitySet="Fechadura">
           <ScalarProperty Name="EnderecoMAC" ColumnName="EnderecoMAC" />
           <ScalarProperty Name="Versao" ColumnName="Versao" />
-          <ScalarProperty Name="DataDeAtivacao" ColumnName="DataDeAtivacao" />
           <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
           <ScalarProperty Name="IdentificadorFechadura" ColumnName="IdentificadorFechadura" />
+          <ScalarProperty Name="DataDeAtivacao" ColumnName="DataDeAtivacao" />
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
           <ScalarProperty Name="EnderecoId" ColumnName="EnderecoId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Invasoes">
-      <EntityTypeMapping TypeName="FinalModel.Invasoes">
+      <EntityTypeMapping TypeName="CaraCracha.Invasoes">
         <MappingFragment StoreEntitySet="Invasoes">
           <ScalarProperty Name="InvasoesId" ColumnName="InvasoesId" />
           <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
@@ -49,15 +49,31 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Perfil">
-      <EntityTypeMapping TypeName="FinalModel.Perfil">
+      <EntityTypeMapping TypeName="CaraCracha.Perfil">
         <MappingFragment StoreEntitySet="Perfil">
-          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
           <ScalarProperty Name="PerfilId" ColumnName="PerfilId" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PessoaFisica">
+      <EntityTypeMapping TypeName="CaraCracha.PessoaFisica">
+        <MappingFragment StoreEntitySet="PessoaFisica">
+          <ScalarProperty Name="CPF" ColumnName="CPF" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PessoaJuridica">
+      <EntityTypeMapping TypeName="CaraCracha.PessoaJuridica">
+        <MappingFragment StoreEntitySet="PessoaJuridica">
+          <ScalarProperty Name="CNPJ" ColumnName="CNPJ" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Usuario">
-      <EntityTypeMapping TypeName="FinalModel.Usuario">
+      <EntityTypeMapping TypeName="CaraCracha.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
           <ScalarProperty Name="RFIDCard" ColumnName="RFIDCard" />
           <ScalarProperty Name="Nome" ColumnName="Nome" />
@@ -70,5 +86,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="Residencia" TypeName="CaraCracha.Residencia" StoreEntitySet="Residencia">
+      <EndProperty Name="Endereco">
+        <ScalarProperty Name="EnderecoId" ColumnName="EnderecoId" />
+      </EndProperty>
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

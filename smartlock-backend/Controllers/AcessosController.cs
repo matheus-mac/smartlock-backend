@@ -15,7 +15,7 @@ namespace smartlock_backend.Controllers
 {
     public class AcessosController : ApiController
     {
-        private EntitiesProduction db = new EntitiesProduction();
+        private CaraCrachaModelo db = new CaraCrachaModelo();
 
         // GET: api/Acessos
         public IQueryable<Acessos> GetAcessos()
@@ -25,7 +25,7 @@ namespace smartlock_backend.Controllers
 
         // GET: api/Acessos/5
         [ResponseType(typeof(Acessos))]
-        public async Task<IHttpActionResult> GetAcessos(string id)
+        public async Task<IHttpActionResult> GetAcessos(int id)
         {
             Acessos acessos = await db.Acessos.FindAsync(id);
             if (acessos == null)
@@ -38,7 +38,7 @@ namespace smartlock_backend.Controllers
 
         // PUT: api/Acessos/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutAcessos(string id, Acessos acessos)
+        public async Task<IHttpActionResult> PutAcessos(int id, Acessos acessos)
         {
             if (!ModelState.IsValid)
             {
@@ -81,29 +81,14 @@ namespace smartlock_backend.Controllers
             }
 
             db.Acessos.Add(acessos);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AcessosExists(acessos.AcessosId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = acessos.AcessosId }, acessos);
         }
 
         // DELETE: api/Acessos/5
         [ResponseType(typeof(Acessos))]
-        public async Task<IHttpActionResult> DeleteAcessos(string id)
+        public async Task<IHttpActionResult> DeleteAcessos(int id)
         {
             Acessos acessos = await db.Acessos.FindAsync(id);
             if (acessos == null)
@@ -126,7 +111,7 @@ namespace smartlock_backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool AcessosExists(string id)
+        private bool AcessosExists(int id)
         {
             return db.Acessos.Count(e => e.AcessosId == id) > 0;
         }

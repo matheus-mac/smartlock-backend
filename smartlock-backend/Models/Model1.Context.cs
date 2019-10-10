@@ -13,10 +13,10 @@ namespace smartlock_backend.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EntitiesProduction : DbContext
+    public partial class CaraCrachaModelo : DbContext
     {
-        public EntitiesProduction()
-            : base("name=EntitiesProduction")
+        public CaraCrachaModelo()
+            : base("name=CaraCrachaModelo")
         {
         }
     
@@ -30,6 +30,8 @@ namespace smartlock_backend.Models
         public virtual DbSet<Fechadura> Fechadura { get; set; }
         public virtual DbSet<Invasoes> Invasoes { get; set; }
         public virtual DbSet<Perfil> Perfil { get; set; }
+        public virtual DbSet<PessoaFisica> PessoaFisica { get; set; }
+        public virtual DbSet<PessoaJuridica> PessoaJuridica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

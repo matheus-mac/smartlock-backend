@@ -13,44 +13,44 @@ using smartlock_backend.Models;
 
 namespace smartlock_backend.Controllers
 {
-    public class PerfisController : ApiController
+    public class PessoaJuridicasController : ApiController
     {
-        private EntitiesProduction db = new EntitiesProduction();
+        private CaraCrachaModelo db = new CaraCrachaModelo();
 
-        // GET: api/Perfis
-        public IQueryable<Perfil> GetPerfil()
+        // GET: api/PessoaJuridicas
+        public IQueryable<PessoaJuridica> GetPessoaJuridica()
         {
-            return db.Perfil;
+            return db.PessoaJuridica;
         }
 
-        // GET: api/Perfis/5
-        [ResponseType(typeof(Perfil))]
-        public async Task<IHttpActionResult> GetPerfil(int id)
+        // GET: api/PessoaJuridicas/5
+        [ResponseType(typeof(PessoaJuridica))]
+        public async Task<IHttpActionResult> GetPessoaJuridica(string id)
         {
-            Perfil perfil = await db.Perfil.FindAsync(id);
-            if (perfil == null)
+            PessoaJuridica pessoaJuridica = await db.PessoaJuridica.FindAsync(id);
+            if (pessoaJuridica == null)
             {
                 return NotFound();
             }
 
-            return Ok(perfil);
+            return Ok(pessoaJuridica);
         }
 
-        // PUT: api/Perfis/5
+        // PUT: api/PessoaJuridicas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPerfil(int id, Perfil perfil)
+        public async Task<IHttpActionResult> PutPessoaJuridica(string id, PessoaJuridica pessoaJuridica)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != perfil.PerfilId)
+            if (id != pessoaJuridica.CNPJ)
             {
                 return BadRequest();
             }
 
-            db.Entry(perfil).State = EntityState.Modified;
+            db.Entry(pessoaJuridica).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace smartlock_backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PerfilExists(id))
+                if (!PessoaJuridicaExists(id))
                 {
                     return NotFound();
                 }
@@ -71,16 +71,16 @@ namespace smartlock_backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Perfis
-        [ResponseType(typeof(Perfil))]
-        public async Task<IHttpActionResult> PostPerfil(Perfil perfil)
+        // POST: api/PessoaJuridicas
+        [ResponseType(typeof(PessoaJuridica))]
+        public async Task<IHttpActionResult> PostPessoaJuridica(PessoaJuridica pessoaJuridica)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Perfil.Add(perfil);
+            db.PessoaJuridica.Add(pessoaJuridica);
 
             try
             {
@@ -88,7 +88,7 @@ namespace smartlock_backend.Controllers
             }
             catch (DbUpdateException)
             {
-                if (PerfilExists(perfil.PerfilId))
+                if (PessoaJuridicaExists(pessoaJuridica.CNPJ))
                 {
                     return Conflict();
                 }
@@ -98,23 +98,23 @@ namespace smartlock_backend.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = perfil.PerfilId }, perfil);
+            return CreatedAtRoute("DefaultApi", new { id = pessoaJuridica.CNPJ }, pessoaJuridica);
         }
 
-        // DELETE: api/Perfis/5
-        [ResponseType(typeof(Perfil))]
-        public async Task<IHttpActionResult> DeletePerfil(int id)
+        // DELETE: api/PessoaJuridicas/5
+        [ResponseType(typeof(PessoaJuridica))]
+        public async Task<IHttpActionResult> DeletePessoaJuridica(string id)
         {
-            Perfil perfil = await db.Perfil.FindAsync(id);
-            if (perfil == null)
+            PessoaJuridica pessoaJuridica = await db.PessoaJuridica.FindAsync(id);
+            if (pessoaJuridica == null)
             {
                 return NotFound();
             }
 
-            db.Perfil.Remove(perfil);
+            db.PessoaJuridica.Remove(pessoaJuridica);
             await db.SaveChangesAsync();
 
-            return Ok(perfil);
+            return Ok(pessoaJuridica);
         }
 
         protected override void Dispose(bool disposing)
@@ -126,9 +126,9 @@ namespace smartlock_backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool PerfilExists(int id)
+        private bool PessoaJuridicaExists(string id)
         {
-            return db.Perfil.Count(e => e.PerfilId == id) > 0;
+            return db.PessoaJuridica.Count(e => e.CNPJ == id) > 0;
         }
     }
 }

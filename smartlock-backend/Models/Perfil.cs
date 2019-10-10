@@ -20,8 +20,8 @@ namespace smartlock_backend.Models
             this.Usuario = new HashSet<Usuario>();
         }
     
-        public string Descricao { get; set; }
         public int PerfilId { get; set; }
+        public string Descricao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }

@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmartlockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Acessos">
+    <Key>
+      <PropertyRef Name="AcessosId" />
+    </Key>
+    <Property Name="DataHora" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="AcessosId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumeroSerial" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Fechadura" Relationship="Self.FK__Acessos__NumeroS__09A971A2" FromRole="Acessos" ToRole="Fechadura" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Acessos__Usuario__0A9D95DB" FromRole="Acessos" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Endereco">
+    <Key>
+      <PropertyRef Name="EnderecoId" />
+    </Key>
+    <Property Name="UF" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Numero" Type="Int32" />
+    <Property Name="Cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Rua" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CEP" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Bairro" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="EnderecoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Complemento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Fechadura" Relationship="Self.FK__Fechadura__Ender__02084FDA" FromRole="Endereco" ToRole="Fechadura" />
+    <NavigationProperty Name="Usuario" Relationship="Self.Residencia" FromRole="Endereco" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Fechadura">
+    <Key>
+      <PropertyRef Name="NumeroSerial" />
+    </Key>
+    <Property Name="EnderecoMAC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Versao" Type="Int32" />
+    <Property Name="NumeroSerial" Type="Int32" Nullable="false" />
+    <Property Name="IdentificadorFechadura" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DataDeAtivacao" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="EnderecoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Acessos" Relationship="Self.FK__Acessos__NumeroS__09A971A2" FromRole="Fechadura" ToRole="Acessos" />
+    <NavigationProperty Name="Endereco" Relationship="Self.FK__Fechadura__Ender__02084FDA" FromRole="Fechadura" ToRole="Endereco" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Fechadura__Usuar__01142BA1" FromRole="Fechadura" ToRole="Usuario" />
+    <NavigationProperty Name="Invasoes" Relationship="Self.FK__Invasoes__Numero__04E4BC85" FromRole="Fechadura" ToRole="Invasoes" />
+  </EntityType>
+  <EntityType Name="Invasoes">
+    <Key>
+      <PropertyRef Name="InvasoesId" />
+    </Key>
+    <Property Name="InvasoesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VideoLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DataHora" Type="DateTime" Precision="3" />
+    <Property Name="NumeroSerial" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Fechadura" Relationship="Self.FK__Invasoes__Numero__04E4BC85" FromRole="Invasoes" ToRole="Fechadura" />
+  </EntityType>
+  <EntityType Name="Perfil">
+    <Key>
+      <PropertyRef Name="PerfilId" />
+    </Key>
+    <Property Name="PerfilId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__PerfilI__0E6E26BF" FromRole="Perfil" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="RFIDCard" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Senha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Telefone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Foto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PerfilId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Acessos" Relationship="Self.FK__Acessos__Usuario__0A9D95DB" FromRole="Usuario" ToRole="Acessos" />
+    <NavigationProperty Name="Fechadura" Relationship="Self.FK__Fechadura__Usuar__01142BA1" FromRole="Usuario" ToRole="Fechadura" />
+    <NavigationProperty Name="Perfil" Relationship="Self.FK__Usuario__PerfilI__0E6E26BF" FromRole="Usuario" ToRole="Perfil" />
+    <NavigationProperty Name="PessoaFisica" Relationship="Self.FK__PessoaFis__Usuar__7E37BEF6" FromRole="Usuario" ToRole="PessoaFisica" />
+    <NavigationProperty Name="PessoaJuridica" Relationship="Self.FK__PessoaJur__Usuar__7C4F7684" FromRole="Usuario" ToRole="PessoaJuridica" />
+    <NavigationProperty Name="Endereco" Relationship="Self.Residencia" FromRole="Usuario" ToRole="Endereco" />
+  </EntityType>
+  <EntityType Name="PessoaFisica">
+    <Key>
+      <PropertyRef Name="CPF" />
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="CPF" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__PessoaFis__Usuar__7E37BEF6" FromRole="PessoaFisica" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="PessoaJuridica">
+    <Key>
+      <PropertyRef Name="CNPJ" />
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="CNPJ" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__PessoaJur__Usuar__7C4F7684" FromRole="PessoaJuridica" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="FK__Acessos__NumeroS__09A971A2">
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
+    <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fechadura">
+        <PropertyRef Name="NumeroSerial" />
+      </Principal>
+      <Dependent Role="Acessos">
+        <PropertyRef Name="NumeroSerial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Acessos__Usuario__0A9D95DB">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Acessos" Type="Self.Acessos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Acessos">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Fechadura__Ender__02084FDA">
+    <End Role="Endereco" Type="Self.Endereco" Multiplicity="1" />
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Endereco">
+        <PropertyRef Name="EnderecoId" />
+      </Principal>
+      <Dependent Role="Fechadura">
+        <PropertyRef Name="EnderecoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Fechadura__Usuar__01142BA1">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Fechadura">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invasoes__Numero__04E4BC85">
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
+    <End Role="Invasoes" Type="Self.Invasoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fechadura">
+        <PropertyRef Name="NumeroSerial" />
+      </Principal>
+      <Dependent Role="Invasoes">
+        <PropertyRef Name="NumeroSerial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario__PerfilI__0E6E26BF">
+    <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perfil">
+        <PropertyRef Name="PerfilId" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="PerfilId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PessoaFis__Usuar__7E37BEF6">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="PessoaFisica" Type="Self.PessoaFisica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="PessoaFisica">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PessoaJur__Usuar__7C4F7684">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="PessoaJuridica" Type="Self.PessoaJuridica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="PessoaJuridica">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Residencia">
+    <End Role="Endereco" Type="Self.Endereco" Multiplicity="*" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Acessos" EntityType="Self.Acessos" />
+    <EntitySet Name="Endereco" EntityType="Self.Endereco" />
+    <EntitySet Name="Fechadura" EntityType="Self.Fechadura" />
+    <EntitySet Name="Invasoes" EntityType="Self.Invasoes" />
+    <EntitySet Name="Perfil" EntityType="Self.Perfil" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <EntitySet Name="PessoaFisica" EntityType="Self.PessoaFisica" />
+    <EntitySet Name="PessoaJuridica" EntityType="Self.PessoaJuridica" />
+    <AssociationSet Name="FK__Acessos__NumeroS__09A971A2" Association="Self.FK__Acessos__NumeroS__09A971A2">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Acessos" EntitySet="Acessos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Acessos__Usuario__0A9D95DB" Association="Self.FK__Acessos__Usuario__0A9D95DB">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Acessos" EntitySet="Acessos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Fechadura__Ender__02084FDA" Association="Self.FK__Fechadura__Ender__02084FDA">
+      <End Role="Endereco" EntitySet="Endereco" />
+      <End Role="Fechadura" EntitySet="Fechadura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Fechadura__Usuar__01142BA1" Association="Self.FK__Fechadura__Usuar__01142BA1">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Fechadura" EntitySet="Fechadura" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invasoes__Numero__04E4BC85" Association="Self.FK__Invasoes__Numero__04E4BC85">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Invasoes" EntitySet="Invasoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__PerfilI__0E6E26BF" Association="Self.FK__Usuario__PerfilI__0E6E26BF">
+      <End Role="Perfil" EntitySet="Perfil" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PessoaFis__Usuar__7E37BEF6" Association="Self.FK__PessoaFis__Usuar__7E37BEF6">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="PessoaFisica" EntitySet="PessoaFisica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PessoaJur__Usuar__7C4F7684" Association="Self.FK__PessoaJur__Usuar__7C4F7684">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="PessoaJuridica" EntitySet="PessoaJuridica" />
+    </AssociationSet>
+    <AssociationSet Name="Residencia" Association="Self.Residencia">
+      <End Role="Endereco" EntitySet="Endereco" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

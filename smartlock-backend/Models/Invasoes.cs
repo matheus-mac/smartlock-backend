@@ -17,7 +17,7 @@ namespace smartlock_backend.Models
         public int InvasoesId { get; set; }
         public string VideoLink { get; set; }
         public Nullable<System.DateTime> DataHora { get; set; }
-        public Nullable<int> NumeroSerial { get; set; }
+        public int NumeroSerial { get; set; }
     
         public virtual Fechadura Fechadura { get; set; }
     }

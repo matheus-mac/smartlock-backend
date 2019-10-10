@@ -13,9 +13,9 @@ using smartlock_backend.Models;
 
 namespace smartlock_backend.Controllers
 {
-    public class EnderecosController : ApiController
+    public class EnderecoesController : ApiController
     {
-        private EntitiesProduction db = new EntitiesProduction();
+        private CaraCrachaModelo db = new CaraCrachaModelo();
 
         // GET: api/Enderecoes
         public IQueryable<Endereco> GetEndereco()
@@ -81,22 +81,7 @@ namespace smartlock_backend.Controllers
             }
 
             db.Endereco.Add(endereco);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (EnderecoExists(endereco.EnderecoId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = endereco.EnderecoId }, endereco);
         }

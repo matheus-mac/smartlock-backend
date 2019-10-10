@@ -23,11 +23,11 @@ namespace smartlock_backend.Models
     
         public string EnderecoMAC { get; set; }
         public Nullable<int> Versao { get; set; }
-        public Nullable<System.DateTime> DataDeAtivacao { get; set; }
         public int NumeroSerial { get; set; }
         public string IdentificadorFechadura { get; set; }
-        public Nullable<int> UsuarioId { get; set; }
-        public Nullable<int> EnderecoId { get; set; }
+        public Nullable<System.DateTime> DataDeAtivacao { get; set; }
+        public int UsuarioId { get; set; }
+        public int EnderecoId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acessos> Acessos { get; set; }

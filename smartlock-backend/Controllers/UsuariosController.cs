@@ -9,31 +9,47 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using smartlock_backend.DTOS;
 using smartlock_backend.Models;
 
 namespace smartlock_backend.Controllers
 {
     public class UsuariosController : ApiController
     {
-        private EntitiesProduction db = new EntitiesProduction();
+        private CaraCrachaModelo db = new CaraCrachaModelo();
 
         // GET: api/Usuarios
-        public IQueryable<Usuario> GetUsuario()
+        public IEnumerable<UsuarioDTO> GetUsuario()
         {
-            return db.Usuario;
+            List<UsuarioDTO> novaLista = new List<UsuarioDTO>();
+
+            db.Usuario.ToList().ForEach(
+                b => novaLista.Add(new UsuarioDTO()
+                    {
+                        NomeDoUsuario = b.Nome,
+                        Foto = b.Foto
+                    }
+                )
+            );
+
+            return novaLista;
         }
 
         // GET: api/Usuarios/5
-        [ResponseType(typeof(Usuario))]
+        [ResponseType(typeof(UsuarioDTO))]
         public async Task<IHttpActionResult> GetUsuario(int id)
         {
             Usuario usuario = await db.Usuario.FindAsync(id);
+
+            UsuarioDTO teste = new UsuarioDTO();
+            teste.NomeDoUsuario = usuario.Nome;
+            teste.Foto = usuario.Foto;
             if (usuario == null)
             {
                 return NotFound();
             }
 
-            return Ok(usuario);
+            return Ok(teste);
         }
 
         // PUT: api/Usuarios/5
@@ -81,22 +97,7 @@ namespace smartlock_backend.Controllers
             }
 
             db.Usuario.Add(usuario);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (UsuarioExists(usuario.UsuarioId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = usuario.UsuarioId }, usuario);
         }
