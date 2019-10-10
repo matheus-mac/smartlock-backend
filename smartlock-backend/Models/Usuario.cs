@@ -22,6 +22,7 @@ namespace smartlock_backend.Models
             this.PessoaFisica = new HashSet<PessoaFisica>();
             this.PessoaJuridica = new HashSet<PessoaJuridica>();
             this.Endereco = new HashSet<Endereco>();
+            this.FechadurasVInculadas = new HashSet<Fechadura>();
         }
     
         public string RFIDCard { get; set; }
@@ -44,5 +45,7 @@ namespace smartlock_backend.Models
         public virtual ICollection<PessoaJuridica> PessoaJuridica { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Endereco> Endereco { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Fechadura> FechadurasVInculadas { get; set; }
     }
 }

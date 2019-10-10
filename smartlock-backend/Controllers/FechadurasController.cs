@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using smartlock_backend.DTOS;
 using smartlock_backend.Models;
 
 namespace smartlock_backend.Controllers
@@ -20,7 +21,8 @@ namespace smartlock_backend.Controllers
         // GET: api/Fechaduras
         public IQueryable<Fechadura> GetFechadura()
         {
-            return db.Fechadura;
+            return db.Fechadura.Include("Usuario");
+            
         }
 
         // GET: api/Fechaduras/5
@@ -129,6 +131,26 @@ namespace smartlock_backend.Controllers
         private bool FechaduraExists(int id)
         {
             return db.Fechadura.Count(e => e.NumeroSerial == id) > 0;
+        }
+
+        [ActionName("VerificaCadastroUsuario")]
+        [HttpGet]
+        [ResponseType(typeof(DTOVerificaUsuarioVinculado))]
+        public HttpResponseMessage VerificaCadastroUsuario(int numeroSerial, string rfidUUID)
+        {
+            Usuario usuario = db.Fechadura.Find(numeroSerial).UsuariosVinculados.Where(b => b.RFIDCard == rfidUUID).FirstOrDefault();
+            DTOVerificaUsuarioVinculado usuarioVerificado = new DTOVerificaUsuarioVinculado()
+            {
+                RFIDCard = usuario.RFIDCard,
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+                UsuarioId = usuario.UsuarioId,
+                Telefone = usuario.Telefone,
+                Foto = usuario.Foto,
+                PerfilId = usuario.PerfilId
+            };
+
+            return Request.CreateResponse(HttpStatusCode.OK, usuarioVerificado);
         }
     }
 }

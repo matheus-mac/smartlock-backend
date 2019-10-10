@@ -7,6 +7,7 @@ namespace smartlock_backend.DTOS
 {
     public class UsuarioDTO
     {
+        
         public string NomeDoUsuario { get; set; }
         public string Foto { get; set; }
     }

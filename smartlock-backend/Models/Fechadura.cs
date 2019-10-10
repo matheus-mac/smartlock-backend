@@ -19,6 +19,7 @@ namespace smartlock_backend.Models
         {
             this.Acessos = new HashSet<Acessos>();
             this.Invasoes = new HashSet<Invasoes>();
+            this.UsuariosVinculados = new HashSet<Usuario>();
         }
     
         public string EnderecoMAC { get; set; }
@@ -35,5 +36,7 @@ namespace smartlock_backend.Models
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invasoes> Invasoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuario> UsuariosVinculados { get; set; }
     }
 }

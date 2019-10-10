@@ -9,6 +9,16 @@
     <Property Name="NumeroSerial" Type="int" Nullable="false" />
     <Property Name="UsuarioId" Type="int" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'smartlock-production.dbo.Cadastro' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Cadastro">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+      <PropertyRef Name="NumeroSerial" />
+    </Key>
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="NumeroSerial" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Endereco">
     <Key>
       <PropertyRef Name="EnderecoId" />
@@ -104,6 +114,30 @@
         <PropertyRef Name="UsuarioId" />
       </Principal>
       <Dependent Role="Acessos">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cadastro__Numero__2EDAF651">
+    <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
+    <End Role="Cadastro" Type="Self.Cadastro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fechadura">
+        <PropertyRef Name="NumeroSerial" />
+      </Principal>
+      <Dependent Role="Cadastro">
+        <PropertyRef Name="NumeroSerial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cadastro__Usuari__2DE6D218">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Cadastro" Type="Self.Cadastro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Cadastro">
         <PropertyRef Name="UsuarioId" />
       </Dependent>
     </ReferentialConstraint>
@@ -214,6 +248,12 @@
     <EntitySet Name="PessoaJuridica" EntityType="Self.PessoaJuridica" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Residencia" EntityType="Self.Residencia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cadastro" EntityType="Self.Cadastro" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Cadastro].[UsuarioId] AS [UsuarioId], 
+    [Cadastro].[NumeroSerial] AS [NumeroSerial]
+    FROM [dbo].[Cadastro] AS [Cadastro]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK__Acessos__NumeroS__236943A5" Association="Self.FK__Acessos__NumeroS__236943A5">
       <End Role="Fechadura" EntitySet="Fechadura" />
       <End Role="Acessos" EntitySet="Acessos" />
@@ -221,6 +261,14 @@
     <AssociationSet Name="FK__Acessos__Usuario__245D67DE" Association="Self.FK__Acessos__Usuario__245D67DE">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Acessos" EntitySet="Acessos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cadastro__Numero__2EDAF651" Association="Self.FK__Cadastro__Numero__2EDAF651">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Cadastro" EntitySet="Cadastro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cadastro__Usuari__2DE6D218" Association="Self.FK__Cadastro__Usuari__2DE6D218">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Cadastro" EntitySet="Cadastro" />
     </AssociationSet>
     <AssociationSet Name="FK__Fechadura__Ender__1BC821DD" Association="Self.FK__Fechadura__Ender__1BC821DD">
       <End Role="Endereco" EntitySet="Endereco" />

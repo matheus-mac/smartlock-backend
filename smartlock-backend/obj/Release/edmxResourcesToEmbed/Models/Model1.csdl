@@ -41,6 +41,7 @@
     <NavigationProperty Name="Endereco" Relationship="Self.FK__Fechadura__Ender__1BC821DD" FromRole="Fechadura" ToRole="Endereco" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Fechadura__Usuar__1AD3FDA4" FromRole="Fechadura" ToRole="Usuario" />
     <NavigationProperty Name="Invasoes" Relationship="Self.FK__Invasoes__Numero__1EA48E88" FromRole="Fechadura" ToRole="Invasoes" />
+    <NavigationProperty Name="UsuariosVinculados" Relationship="CaraCracha.Cadastro" FromRole="Fechadura" ToRole="Usuario" />
   </EntityType>
   <EntityType Name="Invasoes">
     <Key>
@@ -94,6 +95,7 @@
     <NavigationProperty Name="PessoaFisica" Relationship="Self.FK__PessoaFis__Usuar__17F790F9" FromRole="Usuario" ToRole="PessoaFisica" />
     <NavigationProperty Name="PessoaJuridica" Relationship="Self.FK__PessoaJur__Usuar__151B244E" FromRole="Usuario" ToRole="PessoaJuridica" />
     <NavigationProperty Name="Endereco" Relationship="Self.Residencia" FromRole="Usuario" ToRole="Endereco" />
+    <NavigationProperty Name="FechadurasVInculadas" Relationship="CaraCracha.Cadastro" FromRole="Usuario" ToRole="Fechadura" />
   </EntityType>
   <Association Name="FK__Acessos__NumeroS__236943A5">
     <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
@@ -240,5 +242,13 @@
       <End Role="Endereco" EntitySet="Endereco" />
       <End Role="Usuario" EntitySet="Usuario" />
     </AssociationSet>
+    <AssociationSet Name="Cadastro" Association="CaraCracha.Cadastro">
+      <End Role="Fechadura" EntitySet="Fechadura" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="Cadastro">
+    <End Type="CaraCracha.Fechadura" Role="Fechadura" Multiplicity="*" />
+    <End Type="CaraCracha.Usuario" Role="Usuario" Multiplicity="*" />
+  </Association>
 </Schema>

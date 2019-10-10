@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CaraCracha.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CaraCracha.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acessos">
           <Key>
             <PropertyRef Name="AcessosId" />
@@ -13,6 +13,16 @@
           <Property Name="AcessosId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NumeroSerial" Type="int" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'smartlock-production.dbo.Cadastro' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Cadastro">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="NumeroSerial" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="NumeroSerial" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Endereco">
           <Key>
@@ -109,6 +119,30 @@
               <PropertyRef Name="UsuarioId" />
             </Principal>
             <Dependent Role="Acessos">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cadastro__Numero__2EDAF651">
+          <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
+          <End Role="Cadastro" Type="Self.Cadastro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fechadura">
+              <PropertyRef Name="NumeroSerial" />
+            </Principal>
+            <Dependent Role="Cadastro">
+              <PropertyRef Name="NumeroSerial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cadastro__Usuari__2DE6D218">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Cadastro" Type="Self.Cadastro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Cadastro">
               <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
@@ -219,6 +253,12 @@
           <EntitySet Name="PessoaJuridica" EntityType="Self.PessoaJuridica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Residencia" EntityType="Self.Residencia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cadastro" EntityType="Self.Cadastro" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Cadastro].[UsuarioId] AS [UsuarioId], 
+    [Cadastro].[NumeroSerial] AS [NumeroSerial]
+    FROM [dbo].[Cadastro] AS [Cadastro]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Acessos__NumeroS__236943A5" Association="Self.FK__Acessos__NumeroS__236943A5">
             <End Role="Fechadura" EntitySet="Fechadura" />
             <End Role="Acessos" EntitySet="Acessos" />
@@ -226,6 +266,14 @@
           <AssociationSet Name="FK__Acessos__Usuario__245D67DE" Association="Self.FK__Acessos__Usuario__245D67DE">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Acessos" EntitySet="Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cadastro__Numero__2EDAF651" Association="Self.FK__Cadastro__Numero__2EDAF651">
+            <End Role="Fechadura" EntitySet="Fechadura" />
+            <End Role="Cadastro" EntitySet="Cadastro" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cadastro__Usuari__2DE6D218" Association="Self.FK__Cadastro__Usuari__2DE6D218">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cadastro" EntitySet="Cadastro" />
           </AssociationSet>
           <AssociationSet Name="FK__Fechadura__Ender__1BC821DD" Association="Self.FK__Fechadura__Ender__1BC821DD">
             <End Role="Endereco" EntitySet="Endereco" />
@@ -260,8 +308,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CaraCracha" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -306,6 +353,7 @@
           <NavigationProperty Name="Endereco" Relationship="Self.FK__Fechadura__Ender__1BC821DD" FromRole="Fechadura" ToRole="Endereco" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Fechadura__Usuar__1AD3FDA4" FromRole="Fechadura" ToRole="Usuario" />
           <NavigationProperty Name="Invasoes" Relationship="Self.FK__Invasoes__Numero__1EA48E88" FromRole="Fechadura" ToRole="Invasoes" />
+          <NavigationProperty Name="UsuariosVinculados" Relationship="CaraCracha.Cadastro" FromRole="Fechadura" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Invasoes">
           <Key>
@@ -359,6 +407,7 @@
           <NavigationProperty Name="PessoaFisica" Relationship="Self.FK__PessoaFis__Usuar__17F790F9" FromRole="Usuario" ToRole="PessoaFisica" />
           <NavigationProperty Name="PessoaJuridica" Relationship="Self.FK__PessoaJur__Usuar__151B244E" FromRole="Usuario" ToRole="PessoaJuridica" />
           <NavigationProperty Name="Endereco" Relationship="Self.Residencia" FromRole="Usuario" ToRole="Endereco" />
+          <NavigationProperty Name="FechadurasVInculadas" Relationship="CaraCracha.Cadastro" FromRole="Usuario" ToRole="Fechadura" />
         </EntityType>
         <Association Name="FK__Acessos__NumeroS__236943A5">
           <End Role="Fechadura" Type="Self.Fechadura" Multiplicity="1" />
@@ -505,7 +554,15 @@
             <End Role="Endereco" EntitySet="Endereco" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <AssociationSet Name="Cadastro" Association="CaraCracha.Cadastro">
+            <End Role="Fechadura" EntitySet="Fechadura" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="Cadastro">
+          <End Type="CaraCracha.Fechadura" Role="Fechadura" Multiplicity="*" />
+          <End Type="CaraCracha.Usuario" Role="Usuario" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -603,6 +660,14 @@
             </EndProperty>
             <EndProperty Name="Usuario">
               <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Cadastro" TypeName="CaraCracha.Cadastro" StoreEntitySet="Cadastro">
+            <EndProperty Name="Usuario">
+              <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+            </EndProperty>
+            <EndProperty Name="Fechadura">
+              <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

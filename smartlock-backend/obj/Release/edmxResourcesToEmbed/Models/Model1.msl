@@ -94,5 +94,13 @@
         <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="Cadastro" TypeName="CaraCracha.Cadastro" StoreEntitySet="Cadastro">
+      <EndProperty Name="Usuario">
+        <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+      </EndProperty>
+      <EndProperty Name="Fechadura">
+        <ScalarProperty Name="NumeroSerial" ColumnName="NumeroSerial" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>
