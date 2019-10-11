@@ -41,9 +41,11 @@ namespace smartlock_backend.Controllers
         {
             Usuario usuario = await db.Usuario.FindAsync(id);
 
-            UsuarioDTO teste = new UsuarioDTO();
-            teste.NomeDoUsuario = usuario.Nome;
-            teste.Foto = usuario.Foto;
+            UsuarioDTO teste = new UsuarioDTO
+            {
+                NomeDoUsuario = usuario.Nome,
+                Foto = usuario.Foto
+            };
             if (usuario == null)
             {
                 return NotFound();

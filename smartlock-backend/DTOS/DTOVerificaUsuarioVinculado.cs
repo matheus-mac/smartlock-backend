@@ -14,5 +14,7 @@ namespace smartlock_backend.DTOS
         public string Telefone { get; set; }
         public string Foto { get; set; }
         public int PerfilId { get; set; }
+
+        public bool UsuarioVinculado { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.csproj.CoreCompileInputs.cache
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\smartlock-backend.dll.config
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\smartlock-backend.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\smartlock-backend.pdb
@@ -143,8 +144,6 @@ D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\Microsoft.CodeDom.
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\pt-br\System.Net.Http.Formatting.resources.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\pt-br\System.Web.Http.resources.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\pt-br\System.Web.Http.WebHost.resources.dll
-D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.csprojAssemblyReference.cache
-D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.csproj.CoreCompileInputs.cache
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.csproj.CopyComplete
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.pdb

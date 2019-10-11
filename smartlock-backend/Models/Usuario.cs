@@ -9,6 +9,7 @@
 
 namespace smartlock_backend.Models
 {
+    using smartlock_backend.DTOS;
     using System;
     using System.Collections.Generic;
     
@@ -47,5 +48,26 @@ namespace smartlock_backend.Models
         public virtual ICollection<Endereco> Endereco { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fechadura> FechadurasVInculadas { get; set; }
+
+        public DTOVerificaUsuarioVinculado toVerificarUsuarioVinculadoDTO(bool usuarioVinculado)
+        {
+            DTOVerificaUsuarioVinculado usuarioVerificado = new DTOVerificaUsuarioVinculado()
+            {
+                RFIDCard = this.RFIDCard,
+                Nome = this.Nome,
+                Email = this.Email,
+                UsuarioId = this.UsuarioId,
+                Telefone = this.Telefone,
+                Foto = this.Foto,
+                PerfilId = this.PerfilId,
+                UsuarioVinculado = usuarioVinculado
+            };
+            return usuarioVerificado;
+        }
+
+        public bool usuarioVinculadoAFechadura(Fechadura fechadura)
+        {
+            return this.FechadurasVInculadas.Contains(fechadura);
+        }
     }
 }

@@ -1,3 +1,4 @@
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Release\smartlock-backend.Tests.csproj.CoreCompileInputs.cache
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
@@ -31,7 +32,6 @@ D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Release\pt-b
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Release\pt-br\System.Web.Http.WebHost.resources.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\bin\Release\pt-br\System.Net.Http.Formatting.resources.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Release\smartlock-backend.Tests.csprojAssemblyReference.cache
-D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Release\smartlock-backend.Tests.csproj.CoreCompileInputs.cache
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Release\smartlock-backend.Tests.csproj.CopyComplete
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Release\smartlock-backend.Tests.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend.Tests\obj\Release\smartlock-backend.Tests.pdb

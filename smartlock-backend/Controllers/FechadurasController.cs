@@ -12,6 +12,8 @@ using System.Web.Http.Description;
 using smartlock_backend.DTOS;
 using smartlock_backend.Models;
 
+
+
 namespace smartlock_backend.Controllers
 {
     public class FechadurasController : ApiController
@@ -138,19 +140,20 @@ namespace smartlock_backend.Controllers
         [ResponseType(typeof(DTOVerificaUsuarioVinculado))]
         public HttpResponseMessage VerificaCadastroUsuario(int numeroSerial, string rfidUUID)
         {
-            Usuario usuario = db.Fechadura.Find(numeroSerial).UsuariosVinculados.Where(b => b.RFIDCard == rfidUUID).FirstOrDefault();
-            DTOVerificaUsuarioVinculado usuarioVerificado = new DTOVerificaUsuarioVinculado()
+            Usuario usuario = db.Usuario.Where(user => user.RFIDCard == rfidUUID).FirstOrDefault();
+            if (usuario == null)
             {
-                RFIDCard = usuario.RFIDCard,
-                Nome = usuario.Nome,
-                Email = usuario.Email,
-                UsuarioId = usuario.UsuarioId,
-                Telefone = usuario.Telefone,
-                Foto = usuario.Foto,
-                PerfilId = usuario.PerfilId
-            };
+                return Request.CreateResponse(HttpStatusCode.OK, "Usuario não encontrado");
+            }
 
-            return Request.CreateResponse(HttpStatusCode.OK, usuarioVerificado);
+            bool usuarioVinculado = usuario.Fechadura.Where(fechadura => fechadura.NumeroSerial == numeroSerial).Any();
+
+            if (!usuarioVinculado)
+            {
+                Util.EmailUtil.EnviarEmail(usuario.Email);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, usuario.toVerificarUsuarioVinculadoDTO(usuarioVinculado));
         }
     }
 }
