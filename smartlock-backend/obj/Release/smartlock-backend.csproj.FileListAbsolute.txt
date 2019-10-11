@@ -147,3 +147,4 @@ D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\bin\pt-br\System.Web.H
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.csproj.CopyComplete
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.dll
 D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.pdb
+D:\CEFET\TCC2\backEnd\smartlock-backend\smartlock-backend\obj\Release\smartlock-backend.csprojAssemblyReference.cache

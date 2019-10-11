@@ -11,8 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using smartlock_backend.DTOS;
 using smartlock_backend.Models;
-
-
+using smartlock_backend.Util;
 
 namespace smartlock_backend.Controllers
 {
@@ -137,7 +136,7 @@ namespace smartlock_backend.Controllers
 
         [ActionName("VerificaCadastroUsuario")]
         [HttpGet]
-        [ResponseType(typeof(DTOVerificaUsuarioVinculado))]
+        [ResponseType(typeof(VerificaUsuarioVinculadoDTO))]
         public HttpResponseMessage VerificaCadastroUsuario(int numeroSerial, string rfidUUID)
         {
             Usuario usuario = db.Usuario.Where(user => user.RFIDCard == rfidUUID).FirstOrDefault();
@@ -146,11 +145,15 @@ namespace smartlock_backend.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, "Usuario não encontrado");
             }
 
-            bool usuarioVinculado = usuario.Fechadura.Where(fechadura => fechadura.NumeroSerial == numeroSerial).Any();
+            Fechadura fechadura = db.Fechadura.Find(numeroSerial);
+            bool usuarioVinculado = usuario.Fechadura.Contains(fechadura);
 
             if (!usuarioVinculado)
             {
-                Util.EmailUtil.EnviarEmail(usuario.Email);
+                EmailUtil.EnviarEmail(fechadura.Usuario.Email, 
+                                         Constantes.EmailUsuarioNaoVinculadoAssunto,
+                                          String.Format(Constantes.EmailUsuarioNaoVinculadoTexto, usuario.UsuarioId.ToString(), usuario.Nome,
+                                                fechadura.NumeroSerial, fechadura.IdentificadorFechadura, DateTime.Now));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, usuario.toVerificarUsuarioVinculadoDTO(usuarioVinculado));

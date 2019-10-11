@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="AcessosId" />
     </Key>
-    <Property Name="DataHora" Type="varchar" MaxLength="10" />
+    <Property Name="DataHora" Type="datetime" />
     <Property Name="AcessosId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NumeroSerial" Type="int" Nullable="false" />
     <Property Name="UsuarioId" Type="int" Nullable="false" />

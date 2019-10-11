@@ -5,7 +5,7 @@ using System.Web;
 
 namespace smartlock_backend.DTOS
 {
-    public class DTOVerificaUsuarioVinculado
+    public class VerificaUsuarioVinculadoDTO
     {
         public string RFIDCard { get; set; }
         public string Nome { get; set; }

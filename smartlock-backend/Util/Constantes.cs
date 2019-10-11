@@ -7,6 +7,11 @@ namespace smartlock_backend.Util
 {
     public class Constantes
     {
-        public static string EmailUsuarioNaoVinculado = "Usuario não vinculado tentou o acesso";
+        public static string EmailUsuarioNaoVinculadoTexto = "O usuario {0}- {1} não vinculado à fechadura {2}- {3} tentou o acesso em {4}";
+        public static string EmailUsuarioNaoVinculadoAssunto = "Usuario não vinculado tentou acesso";
+
+        public static string EmailFalhaNoReconhecimentoPorVideoAssunto = "Autenticação por vídeo falhou";
+        public static string EmailFalhaNoReconhecimentoPorVideoTexto = "O usuario {0}- {1} tentou realizar" +
+            "a autenticação por vídeo na fechadura {2}- {3} em {4} porém não obteve sucesso.";
     }
 }

@@ -238,7 +238,8 @@
     <Compile Include="Controllers\PessoaFisicasController.cs" />
     <Compile Include="Controllers\PessoaJuridicasController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
-    <Compile Include="DTOS\DTOVerificaUsuarioVinculado.cs" />
+    <Compile Include="DTOS\VerificaUsuarioVinculadoDTO.cs" />
+    <Compile Include="DTOS\RegistraAcessoDTO.cs" />
     <Compile Include="DTOS\UsuarioDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

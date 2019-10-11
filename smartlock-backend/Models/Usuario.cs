@@ -49,9 +49,9 @@ namespace smartlock_backend.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fechadura> FechadurasVInculadas { get; set; }
 
-        public DTOVerificaUsuarioVinculado toVerificarUsuarioVinculadoDTO(bool usuarioVinculado)
+        public VerificaUsuarioVinculadoDTO toVerificarUsuarioVinculadoDTO(bool usuarioVinculado)
         {
-            DTOVerificaUsuarioVinculado usuarioVerificado = new DTOVerificaUsuarioVinculado()
+            VerificaUsuarioVinculadoDTO usuarioVerificado = new VerificaUsuarioVinculadoDTO()
             {
                 RFIDCard = this.RFIDCard,
                 Nome = this.Nome,
@@ -69,5 +69,6 @@ namespace smartlock_backend.Models
         {
             return this.FechadurasVInculadas.Contains(fechadura);
         }
+
     }
 }

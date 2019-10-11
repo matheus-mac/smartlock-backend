@@ -14,7 +14,7 @@ namespace smartlock_backend.Models
     
     public partial class Acessos
     {
-        public string DataHora { get; set; }
+        public Nullable<System.DateTime> DataHora { get; set; }
         public int AcessosId { get; set; }
         public int NumeroSerial { get; set; }
         public int UsuarioId { get; set; }

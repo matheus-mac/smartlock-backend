@@ -9,7 +9,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using smartlock_backend.DTOS;
 using smartlock_backend.Models;
+using smartlock_backend.Util;
 
 namespace smartlock_backend.Controllers
 {
@@ -114,6 +116,48 @@ namespace smartlock_backend.Controllers
         private bool AcessosExists(int id)
         {
             return db.Acessos.Count(e => e.AcessosId == id) > 0;
+        }
+
+
+        [ActionName("RegistraAcesso")]
+        [HttpPost]
+        [ResponseType(typeof(RegistraAcessoDTO))]
+        public async Task<HttpResponseMessage> RegistraAcessoAsync(int numeroSerial, int usuarioId)
+        {
+            DateTime horaAcesso = DateTime.Now;
+            Acessos acesso = new Acessos()
+            {
+                UsuarioId = usuarioId,
+                NumeroSerial = numeroSerial,
+                DataHora = horaAcesso,
+            };
+
+            db.Acessos.Add(acesso);
+            await db.SaveChangesAsync();
+
+            return Request.CreateResponse(HttpStatusCode.OK, new RegistraAcessoDTO()
+            {
+                AcessoRegistrado = true,
+                HoraAcesso = horaAcesso
+            });
+        }
+
+        [ActionName("FalhaAutenticacaoPorVideo")]
+        [HttpPost]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage FalhaAutenticacaoPorVideo(int numeroSerial, int usuarioId)
+        {
+            Fechadura fechadura = db.Fechadura.Find(numeroSerial);
+            Usuario usuario = db.Usuario.Find(usuarioId);
+
+            EmailUtil.EnviarEmail(fechadura.Usuario.Email,
+                                         Constantes.EmailFalhaNoReconhecimentoPorVideoAssunto,
+                                          String.Format(Constantes.EmailFalhaNoReconhecimentoPorVideoTexto, usuario.UsuarioId.ToString(), usuario.Nome,
+                                                fechadura.NumeroSerial, fechadura.IdentificadorFechadura, DateTime.Now));
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+
         }
     }
 }

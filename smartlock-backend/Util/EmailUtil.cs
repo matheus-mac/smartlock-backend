@@ -21,13 +21,15 @@ namespace smartlock_backend.Util
         };
 
 
-        public static bool EnviarEmail(string emailDestinatario)
+        public static bool EnviarEmail(string emailDestinatario, string assunto, string texto)
         {
-            MailMessage email = new MailMessage();
-            email.From = new MailAddress("mac.matheus.costa@gmail.com");
+            MailMessage email = new MailMessage
+            {
+                From = new MailAddress("mac.matheus.costa@gmail.com")
+            };
             email.To.Add(emailDestinatario);
-            email.Subject = "Teste";
-            email.Body = Constantes.EmailUsuarioNaoVinculado;
+            email.Subject = assunto;
+            email.Body = texto;
 
             smtp.Send(email);
             return true;
