@@ -31,7 +31,16 @@ namespace smartlock_backend.Util
             email.Subject = assunto;
             email.Body = texto;
 
-            smtp.Send(email);
+            try
+            {
+                smtp.Send(email);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            
             return true;
         }
 

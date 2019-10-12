@@ -150,13 +150,13 @@ namespace smartlock_backend.Controllers
             Fechadura fechadura = db.Fechadura.Find(numeroSerial);
             Usuario usuario = db.Usuario.Find(usuarioId);
 
-            EmailUtil.EnviarEmail(fechadura.Usuario.Email,
+            bool emailEnviado = EmailUtil.EnviarEmail(fechadura.Usuario.Email,
                                          Constantes.EmailFalhaNoReconhecimentoPorVideoAssunto,
                                           String.Format(Constantes.EmailFalhaNoReconhecimentoPorVideoTexto, usuario.UsuarioId.ToString(), usuario.Nome,
                                                 fechadura.NumeroSerial, fechadura.IdentificadorFechadura, DateTime.Now));
 
 
-            return Request.CreateResponse(HttpStatusCode.OK, true);
+            return Request.CreateResponse(HttpStatusCode.OK, emailEnviado);
 
         }
     }

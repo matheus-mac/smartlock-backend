@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using smartlock_backend.Models;
+using smartlock_backend.Util;
 
 namespace smartlock_backend.Controllers
 {
@@ -114,6 +115,33 @@ namespace smartlock_backend.Controllers
         private bool InvasoesExists(int id)
         {
             return db.Invasoes.Count(e => e.InvasoesId == id) > 0;
+        }
+
+        [ActionName("RegistraInvasao")]
+        [HttpPost]
+        [ResponseType(typeof(bool))]
+        public async Task<HttpResponseMessage> RegistraInvasaoAsync(int numeroSerial, string linkVideo)
+        {
+            Fechadura fechadura = db.Fechadura.Find(numeroSerial);
+            DateTime horarioInvasao = DateTime.Now;
+
+            db.Invasoes.Add(new Invasoes()
+            {
+                DataHora = horarioInvasao,
+                VideoLink = linkVideo,
+                NumeroSerial = numeroSerial,
+            });
+
+            await db.SaveChangesAsync();
+
+            bool emailEnviado = EmailUtil.EnviarEmail(fechadura.Usuario.Email,
+                                         Constantes.EmailRegistraInvasaoAssunto,
+                                          String.Format(Constantes.EmailRegistraInvasaoTexto, fechadura.NumeroSerial,
+                                            fechadura.IdentificadorFechadura, horarioInvasao, linkVideo));
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, emailEnviado);
+
         }
     }
 }

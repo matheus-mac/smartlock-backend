@@ -13,5 +13,10 @@ namespace smartlock_backend.Util
         public static string EmailFalhaNoReconhecimentoPorVideoAssunto = "Autenticação por vídeo falhou";
         public static string EmailFalhaNoReconhecimentoPorVideoTexto = "O usuario {0}- {1} tentou realizar" +
             "a autenticação por vídeo na fechadura {2}- {3} em {4} porém não obteve sucesso.";
+
+        public static string EmailRegistraInvasaoAssunto = "(Urgente) Fechadura Invadida!";
+        public static string EmailRegistraInvasaoTexto = "A fechadura {0}- {1} foi invadida em {2} " +
+            "O vídeo registrado está em: {3}.";
+
     }
 }
