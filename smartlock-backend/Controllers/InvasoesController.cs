@@ -120,7 +120,7 @@ namespace smartlock_backend.Controllers
         [ActionName("RegistraInvasao")]
         [HttpPost]
         [ResponseType(typeof(bool))]
-        public async Task<HttpResponseMessage> RegistraInvasaoAsync(int numeroSerial, string linkVideo)
+        public async Task<HttpResponseMessage> RegistraInvasaoAsync(int numeroSerial)
         {
             Fechadura fechadura = db.Fechadura.Find(numeroSerial);
             DateTime horarioInvasao = DateTime.Now;
@@ -128,20 +128,34 @@ namespace smartlock_backend.Controllers
             db.Invasoes.Add(new Invasoes()
             {
                 DataHora = horarioInvasao,
-                VideoLink = linkVideo,
+                VideoLink = "",
                 NumeroSerial = numeroSerial,
             });
 
             await db.SaveChangesAsync();
 
+            return Request.CreateResponse(HttpStatusCode.OK, db.Invasoes.Where(invasao=> invasao.NumeroSerial == numeroSerial).ToList().LastOrDefault().InvasoesId);
+        }
+
+        [ActionName("EditaLinkInvasao")]
+        [HttpPost]
+        [ResponseType(typeof(bool))]
+        public async Task<HttpResponseMessage> EditaLinkInvasao(int invasaoId, string videoLink)
+        {
+            Invasoes invasao = db.Invasoes.Find(invasaoId);
+            Fechadura fechadura = invasao.Fechadura;
+
+            invasao.VideoLink = videoLink;
+
+            await db.SaveChangesAsync();
+
             bool emailEnviado = EmailUtil.EnviarEmail(fechadura.Usuario.Email,
-                                         Constantes.EmailRegistraInvasaoAssunto,
+                                      Constantes.EmailRegistraInvasaoAssunto,
                                           String.Format(Constantes.EmailRegistraInvasaoTexto, fechadura.NumeroSerial,
-                                            fechadura.IdentificadorFechadura, horarioInvasao, linkVideo));
+                                          fechadura.IdentificadorFechadura, invasao.DataHora, videoLink));
 
 
             return Request.CreateResponse(HttpStatusCode.OK, emailEnviado);
-
         }
     }
 }
