@@ -11,13 +11,13 @@ namespace smartlock_backend.Util
     public class EmailUtil
     {
 
-        public static SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+        public static SmtpClient smtp = new SmtpClient("smtp.live.com")
         {
             EnableSsl = true,
             Port = 587,
             DeliveryMethod = SmtpDeliveryMethod.Network,
             UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("mac.matheus.costa@gmail.com", "505RejRobMv13")
+            Credentials = new NetworkCredential("sistema-caracracha@outlook.com", "tcc2Mac13")
         };
 
 
@@ -25,7 +25,7 @@ namespace smartlock_backend.Util
         {
             MailMessage email = new MailMessage
             {
-                From = new MailAddress("mac.matheus.costa@gmail.com")
+                From = new MailAddress("sistema-caracracha@outlook.com")
             };
             email.To.Add(emailDestinatario);
             email.Subject = assunto;

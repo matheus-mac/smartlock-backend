@@ -244,10 +244,10 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>05/24/2018 13:38:24</publishTime>
     </File>
     <File Include="bin/smartlock-backend.dll">
-      <publishTime>10/12/2019 19:22:45</publishTime>
+      <publishTime>10/13/2019 18:44:30</publishTime>
     </File>
     <File Include="bin/smartlock-backend.pdb">
-      <publishTime>10/12/2019 19:22:45</publishTime>
+      <publishTime>10/13/2019 18:44:30</publishTime>
     </File>
     <File Include="bin/System.Buffers.dll">
       <publishTime>05/15/2018 13:29:34</publishTime>
